@@ -1,6 +1,6 @@
 # Sparkhu
 
-해당 리포지토리는 2022년 1학기 경희대학교 컴퓨터공학과 캡스톤디자인 1 수업의
+해당 리포지토리는 2022년 1학기 경희대학교 컴퓨터공학과 캡스톤디자인 1 수업
 ### 실시간 및 배치 빅데이터 분석과 분산 학습을 지원하는 Spark와 Kafka를 사용한 AIOps 기반 아키텍처
 프로젝트의 메인 리포지토리입니다.
 
@@ -127,9 +127,8 @@ curl --location --request GET 'http:// ://{Kafka Connect REST API addr}/connecto
 | **Avg of job**| 38.8| 24.6| 361.1 | 156.9 | 4007.2 | 1370.3|
 ### 3.2 Simple Exponential Smoothing 알고리즘을 적용한 예측 데이터 정확도 향상
 시계열 데이터는 시간의 흐름에 따라 기록된 데이터를 의미하며 시간 지역적으로 특징이 나타냅니다. 우리는 시계열 데이터의 비교적 넓은 구간의 Trend와 짧은 구간의 Seasonal 변동을 잘 표현하는 LSTM 모델을 사용하여 학습을 진행하였고 다음 수식의 Simple Exponential Smoothing알고리즘을 적용하여 비교적 최신 예측이 과거의 데이터로 생성된 예측보다 더 큰 가중치를 적용받도록 하였습니다.
-<p align="center">
-  <img scr="./images/simple_es.jpg">
-</p>
+
+![simple_es](https://user-images.githubusercontent.com/49145596/174446950-262bde7c-6913-4ab4-a570-6ecdb4eb71b1.jpg)
 
 ### 3.3 인프라 자동화의 필요성 감지
 우리는 Spark, Yarn, Hadoop, Kubernetes 클러스터 구성 및 운영 단계에서 각 노드마다 같은 명령을 입력하거나 에러를 처리하는 지옥에 갇혔고 Ansible, Chef 등 IaC 도구와 CI/CD 연계의 필요성을 절실히 느꼈다. 또한 작업이 많아짐에 따라 클러스터 성능이 현저히 저하되는 것을 경험하여 모니터링 시스템부터 시작해서 자동 리소스 조정 영역까지 인프라 관리 자동화의 필요성을 느꼈다. 추후 이러한 부분을 개선해 나갈 예정이다.
