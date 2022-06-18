@@ -24,7 +24,7 @@
 ### 3.1 프로젝트에 활용한 데이터
  제시된 프로젝트에서는 오픈 시계열 데이터셋 [AMPds2](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/FIE0S4) 를 활용하였습니다. <br>
  선정 이유는 temporal resolution이 minutely이며 결측값이 없는 high quality resoltion 이기 때문입니다.<br><br>
- 해당 데이터는 2012년 4월부터 2014년 3월까지로 과거 데이터이기 때문에 프로젝트에서 실시간 및 배치 운영능력을 검증하기 위해 시간축 평행이동을 진행하였습니다. [해당 리포지토리](https://github.com/Sparkhu/timeseries_parallel_traslator)를 참조하세요.
+ 해당 데이터는 2012년 4월부터 2014년 3월까지로 과거 데이터이기 때문에 프로젝트에서 실시간 및 배치 운영능력을 검증하기 위해 시간축 평행이동을 진행하였습니다. [해당 리포지토리](https://github.com/Sparkhu/timeseries_parallel_translator)를 참조하세요.
  ##### 기존 데이터
  | 관측 시작(Unix Timestamp) | 관측 시작(UTC, RFC 3339) |  관측 종료(Unix Timestamp)   |  관측 종료(UTC, RFC 3339)   |
 | :--------: | :--------: | :------: | :-----: |
