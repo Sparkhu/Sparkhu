@@ -2,8 +2,15 @@
 
 해당 리포지토리는 2022년 1학기 경희대학교 컴퓨터공학과 캡스톤디자인 1 수업
 ### 실시간 및 배치 빅데이터 분석과 분산 학습을 지원하는 Spark와 Kafka를 사용한 AIOps 기반 아키텍처
-프로젝트의 메인 리포지토리입니다.
-
+프로젝트의 메인 리포지토리입니다.<br>
+하위프로젝트는 다음과 같습니다.
+- [timeseries_parallel_translator](https://github.com/Sparkhu/timeseries_parallel_translator)
+- [data_retention_management_service](https://github.com/Sparkhu/data-retention-management-service)
+- [batch_trainer](https://github.com/Sparkhu/batch_trainer)
+- [online_trainer](https://github.com/Sparkhu/online_trainer)
+- [prediction_gateway](https://github.com/Sparkhu/prediction-gateway)
+- [data_control_ui](https://github.com/Sparkhu/data-control-ui)
+- <del>trainer_factory</del>(will be soon)
 
 ## 1. 문제 정의
 빅데이터 시대에 발빠른 데이터 처리 및 핵심 정보 도출 능력은 비즈니스 성패를 좌우합니다.<br>
@@ -16,6 +23,7 @@
 따라서 해당 프로젝트를 통해 운영자의 인프라 관리 및 소프트웨어 관리 개입을 줄이고 시계열 데이터의 장기적 특징 및 트렌드를 잘 반영한 예측 서비스를 제공받을 수 있습니다.<br><br>
 
 전체적인 그림은 다음과 같습니다.
+
 ![overview](./images/overview.png)
 
 ※ 본 연구는 과학기술정보통신부 및 정보통신기획평가원의 SW중심대학 사업의 연구결과로 수행되었음 (2017-0-00093) 지도교수: 허의남
@@ -36,6 +44,7 @@
 
 ### 3.2 Kafka Connect를 이용한 데이터 통합
  Kafka는 고성능 처리능력을 가진 메시지 전달 시스템으로 빅데이터 통합을 위해 활용하였으며 특히 Kafka Connect는 다양한 오픈 소스 Connector를 plugin형식으로 지원함으로써 쉽게 데이터 소스로부터 데이터를 Polling할 수 있습니다.
+ 
 ![kafka](./images/kafka.png)
 
 Connector Provider에 의해 제공된 설정값을 customizing하며 쉽게 구성가능하며 REST API를 통해 Connector를 Kafka에 등록할 수 있습니다.<br>
@@ -94,6 +103,7 @@ curl --location --request GET 'http:// ://{Kafka Connect REST API addr}/connecto
 앞서 언급한 것처럼 <u>데이터를 무한정 쌓으면 관리가 어려운 데이터 폐기장</u>이 되기 일쑤입니다.<br><br>
 시스템이 가진 가용용량은 한계에 직면할 것이며 시스템 운영자가 겉잡을 수 없이 통합된 빅데이터는 수동으로 처리 불가한 수준에 도달하여 시스템 가용성을 제한합니다.<br><br>
 이에 해당 프로젝트에서는 일반화된 데이터 보존 정책을 관리, 수행하는 서비스를 외부적으로 만들었습니다. [해당 리포지토리](https://github.com/Sparkhu/data-retention-management-service.git)를 참조하세요.<br>이제 자동화된 보존 관리 서비스에 의해 관리 지옥에서 벗어나고 일반화된 서비스로부터 자신의 스토리지 영역에 맞게 정책을 확장해 나갈 수 있습니다.
+
 ![retention](./images/retention.png)
 
 ### 3.4 Spark엔진을 활용한 배치 분산 학습
@@ -103,16 +113,20 @@ curl --location --request GET 'http:// ://{Kafka Connect REST API addr}/connecto
 
 ### 3.5 스파크 스트리밍을 활용한 온라인 학습
 온라인 학습은 오프라인 학습과 다르게 실시간 데이터를 기반으로 모델을 최적화합니다. 우리는 스파크 스트리밍을 활용하여 실시간 시계열 데이터로부터 미니배치 Sliding Window를 구성하여 실시간 학습을 진행하였습니다. 또한 실시간 예측 데이터를 Prediction Storage 업데이트하도록 하였습니다. [해당 리포지토리](https://github.com/Sparkhu/online_trainer.git)를 참조하세요.
+
 ![online](./images/online.png)
 
 ### 3.6 배치 학습과 온라인 학습을 연계하는 AIOps 서비스
 오프라인 학습과 온라인 학습의 연계를 제어하는 자동화된 시스템은 AIOps의 핵심 기능을 담당할 것으로 기대됩니다. 이와 더불어 Feature Metadata Store를 제공하는 서비스는 Kafka Connect API로부터 데이터 소스를 등록하는 영역부터, 예측 데이터 저장소를 Indicator해주는 영역까지 시스템 전반에 걸쳐 중요한 정보 시스템 역할을 할 것으로 기대됩니다. <b>현재 해당서비스는 개발 전 단계에 있습니다.</b> 
+
 ![aiops](./images/aiops.png)
 
 ### 3.7 SPA로 구현된 Client와 GraphQL Server의 연동
 전형적인 Single Page Application은 필요한 컴포넌트 구성을 위해 여러 서비스로부터 데이터를 비동기적으로 불러옵니다. <b>이는 앞단에 특정 서비스 의존성을 부여하기 때문에 시스템이 확장함에 따라 부담감을 주게 됩니다.</b><br><br>
 우리는 이에 따라 GraphQL Server로 구현된 예측 데이터 패치 Gateway를 제공하여 서비스 의존성과 멀티 사이드 패치의 책임을 위임하는 전략을 취했습니다. [해당 리포지토리](https://github.com/Sparkhu/prediction-gateway)를 참조하세요. <br><br>따라서 필요한 데이터를 단일 요청으로 유동적으로 불러올 수 있으며 앞단의 서비스 의존에 대한 책임을 덜게 되었습니다.<br><br>
+
 ![singlerequest](./images/singlerequest.png)
+
 또한 향후 GraphQL의 Subscription기능으로 전환하여 실시간 예측데이터를 비동기적으로 구독할 수 있도록 할 예정입니다.
 
 ### 3.8 예측 데이터와 보존 및 학습 정책을 관리하는 대시보드
