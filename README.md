@@ -2,7 +2,7 @@
 
 해당 리포지토리는 2022년 1학기 경희대학교 컴퓨터공학과 캡스톤디자인 1 수업
 ### 실시간 및 배치 빅데이터 분석과 분산 학습을 지원하는 Spark와 Kafka를 사용한 AIOps 기반 아키텍처
-프로젝트의 메인 리포지토리입니다.<br>
+프로젝트의 메인 리포지토리입니다.<br><br>
 하위프로젝트는 다음과 같습니다.
 - [timeseries_parallel_translator](https://github.com/Sparkhu/timeseries_parallel_translator)
 - [data_retention_management_service](https://github.com/Sparkhu/data-retention-management-service)
